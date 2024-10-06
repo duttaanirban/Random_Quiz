@@ -38,9 +38,8 @@ To get started with the Random Quiz App:
 
 ## Files
 
-- `index.html`: The main HTML file that contains the structure of the quiz app.
+- `index.html`: The main HTML file that contains the structure of the quiz app and The Tailwind CSS-powered stylesheet for styling the quiz app.
 - `app.js`: Contains the JavaScript logic for generating questions, checking answers, tracking scores, and handling the quiz flow.
-- `style.css`: The Tailwind CSS-powered stylesheet for styling the quiz app.
 
 ## Customization
 
@@ -48,7 +47,7 @@ To customize the quiz app, you can modify the following:
 
 - **Number of Questions**: Change the `totalQuestions` variable in `app.js` to increase or decrease the number of questions in a single session.
 - **Question Types**: Modify the `generateRandomQuestion` function in `app.js` to generate different types of questions (e.g., more complex arithmetic, vocabulary, or general knowledge).
-- **Styling**: Adjust the Tailwind CSS classes or add custom styles in `style.css` to modify the appearance of the quiz.
+- **Styling**: Adjust the Tailwind CSS classes in `index.html`.
 
 ## Technologies Used
 
