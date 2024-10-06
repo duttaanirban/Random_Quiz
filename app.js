@@ -5,57 +5,40 @@ let currentQuestionCount = 0;
 let score = 0;  // Score tracker
 let isAnswered = false;
 
-// Function to generate a random arithmetic question
-function generateRandomQuestion() {
-  const num1 = Math.floor(Math.random() * 10) + 1;  // Random number between 1 and 10
-  const num2 = Math.floor(Math.random() * 10) + 1;
-  const operators = ['+', '-', '*', '/'];
-  const operator = operators[Math.floor(Math.random() * operators.length)];
-
-  let question, correctAnswer;
-  switch (operator) {
-    case '+':
-      question = `${num1} + ${num2}`;
-      correctAnswer = (num1 + num2).toFixed(2);  // Fixed to 2 decimal places for division
-      break;
-    case '-':
-      question = `${num1} - ${num2}`;
-      correctAnswer = (num1 - num2).toFixed(2);
-      break;
-    case '*':
-      question = `${num1} * ${num2}`;
-      correctAnswer = (num1 * num2).toFixed(2);
-      break;
-    case '/':
-      question = `${num1} / ${num2}`;
-      correctAnswer = (num1 / num2).toFixed(2);  // Ensure fixed precision for division
-      break;
-  }
-
-  // Generate incorrect choices
-  const choices = generateChoices(correctAnswer);
-
-  return {
-    question: `What is ${question}?`,
-    choices,
-    correctAnswer
-  };
-}
-
-// Function to generate choices for the question
-function generateChoices(correctAnswer) {
-  const choices = new Set();
-  choices.add(correctAnswer);  // Include the correct answer
-
-  // Generate 3 incorrect answers close to the correct answer
-  while (choices.size < 4) {
-    const randomOffset = (Math.random() * 10 - 5).toFixed(2);  // Random offset between -5 and 5
-    choices.add((parseFloat(correctAnswer) + parseFloat(randomOffset)).toFixed(2));
-  }
-
-  // Shuffle choices
-  return Array.from(choices).sort(() => Math.random() - 0.5);
-}
+// Pool of fun fact/trivia questions
+const questionsPool = [
+  {
+    question: "What is the capital of France?",
+    choices: ["Paris", "London", "Berlin", "Madrid"],
+    correctAnswer: "Paris"
+  },
+  {
+    question: "Which planet is known as the Red Planet?",
+    choices: ["Earth", "Mars", "Jupiter", "Saturn"],
+    correctAnswer: "Mars"
+  },
+  {
+    question: "Who wrote the play 'Romeo and Juliet'?",
+    choices: ["William Shakespeare", "Charles Dickens", "Leo Tolstoy", "Mark Twain"],
+    correctAnswer: "William Shakespeare"
+  },
+  {
+    question: "What is the tallest mountain in the world?",
+    choices: ["K2", "Mount Everest", "Kangchenjunga", "Makalu"],
+    correctAnswer: "Mount Everest"
+  },
+  {
+    question: "Which ocean is the largest?",
+    choices: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean"],
+    correctAnswer: "Pacific Ocean"
+  },
+  {
+    question: "What is the chemical symbol for water?",
+    choices: ["H2O", "CO2", "O2", "NaCl"],
+    correctAnswer: "H2O"
+  },
+  // Add more trivia questions as needed
+];
 
 // Function to load the next question
 function loadNextQuestion() {
@@ -71,8 +54,9 @@ function loadNextQuestion() {
     return;
   }
 
-  // Generate a new question
-  const questionData = generateRandomQuestion();
+  // Randomly select a question from the pool
+  const questionIndex = Math.floor(Math.random() * questionsPool.length);
+  const questionData = questionsPool.splice(questionIndex, 1)[0];  // Remove the selected question to avoid repetition
   currentQuestionCount++;
 
   // Render the question and choices
@@ -108,8 +92,8 @@ function checkAnswer(selectedAnswer, correctAnswer) {
   
   isAnswered = true;
 
-  // Automatically move to the next question after 3 seconds
-  setTimeout(loadNextQuestion, 3000);
+  // Automatically move to the next question after 1 seconds
+  setTimeout(loadNextQuestion, 1000);
 }
 
 // Function to restart the quiz
